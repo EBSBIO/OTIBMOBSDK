@@ -45,7 +45,7 @@ class EbsSDKAdapterTests: XCTestCase {
 	private let appSchemeKey = "appScheme"
 	private let testAppScheme = "com.test.app"
 	private let ebsAppSource = "com.waveaccess.Ebs"
-	private let appStoreUrl = "itms-apps://itunes.apple.com/app/id1024941703"
+	private let appStoreUrl = "itms-apps://itunes.apple.com/app/id1436489633"
 	
 	private var ebsSessionDetails: EbsSessionDetails {
 		return EbsSessionDetails(sid: UUID(), dboKoUri: "dboKoUri", dboKoPublicUri: "dboKoPublicUri", adapterUrl: "adapterUrl")
