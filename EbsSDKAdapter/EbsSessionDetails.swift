@@ -15,7 +15,7 @@ public struct EbsSessionDetails {
 	}
 
 	/// Session identifier
-	var sid: UUID
+	var sid: String
 
 	/// URL "API for obtaining the result of verification of  DBO KO",
 	/// where Adapter should return the result of bio verification  and user's PDn.
@@ -27,7 +27,7 @@ public struct EbsSessionDetails {
 	// Adapter url for bio verification.
 	var adapterUrl: String
 
-	public init(sid: UUID, dboKoUri: String, dboKoPublicUri: String, adapterUrl: String) {
+	public init(sid: String, dboKoUri: String, dboKoPublicUri: String, adapterUrl: String) {
 		self.sid = sid
 		self.dboKoUri = dboKoUri
 		self.dboKoPublicUri = dboKoPublicUri
