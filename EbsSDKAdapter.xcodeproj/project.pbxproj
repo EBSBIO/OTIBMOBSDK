@@ -227,7 +227,7 @@
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEBUG_MODE = NO;
 				DEFINES_MODULE = YES;
@@ -243,6 +243,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ebs.sdkadapter;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -417,7 +418,7 @@
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEBUG_MODE = NO;
 				DEFINES_MODULE = YES;
@@ -433,6 +434,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ebs.sdkadapter;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -505,7 +507,7 @@
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEBUG_MODE = NO;
 				DEFINES_MODULE = YES;
@@ -521,6 +523,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ebs.sdkadapter;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -566,7 +569,7 @@
 			buildSettings = {
 				BITCODE_GENERATION_MODE = bitcode;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEBUG_MODE = NO;
 				DEFINES_MODULE = YES;
@@ -582,6 +585,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ebs.sdkadapter;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -718,7 +722,7 @@
 			buildSettings = {
 				BITCODE_GENERATION_MODE = marker;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEBUG_MODE = YES;
 				DEFINES_MODULE = YES;
@@ -734,6 +738,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ebs.sdkadapter;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
