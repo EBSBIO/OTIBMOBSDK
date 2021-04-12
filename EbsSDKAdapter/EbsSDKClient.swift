@@ -183,7 +183,7 @@ public class EbsSDKClient {
 		let queryItems = [
 			URLQueryItem(name: EbsRequestKeys.applicationSchemeKey, value: appUrlScheme),
 			URLQueryItem(name: EbsRequestKeys.titleKey, value: appTitle),
-			URLQueryItem(name: EbsSessionDetails.CodingKeys.sid.rawValue, value: sessionDetails.sid.uuidString),
+			URLQueryItem(name: EbsSessionDetails.CodingKeys.sid.rawValue, value: sessionDetails.sid),
 			URLQueryItem(name: EbsSessionDetails.CodingKeys.dboKoUri.rawValue, value: sessionDetails.dboKoUri),
 			URLQueryItem(name: EbsSessionDetails.CodingKeys.dboKoPublicUri.rawValue, value: sessionDetails.dboKoPublicUri),
 			URLQueryItem(name: EbsSessionDetails.CodingKeys.adapterUrl.rawValue, value: sessionDetails.adapterUrl),
