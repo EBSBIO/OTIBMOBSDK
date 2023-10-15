@@ -21,7 +21,7 @@ source 'https://github.com/EBSBIO/OTIBMOBSDK'
 
 ...
 
-pod 'EbsSDKAdapter', '~> 1.0.4'
+pod 'EbsSDKAdapter', '~> 2.0'
 ```
 
 ## Author
