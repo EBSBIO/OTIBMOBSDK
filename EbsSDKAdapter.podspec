@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'EbsSDKAdapter'
-  s.version          = '1.0.1'
+  s.version          = '1.0.4'
   s.summary          = 'SDK для взаимодействия с МП Биометрия.'
 
   # This description is used to generate tags and improve search results.
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 
   s.homepage         = 'https://github.com/EBSBIO/OTIBMOBSDK'
   s.license          =  { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'UBS' => 'sergey.rybchinsky@waveaccess.ru' }
+  s.author           = { 'UBS' => 'support@ebs.ru' }
   s.source           = { :git => 'https://github.com/EBSBIO/OTIBMOBSDK.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '10.0'
