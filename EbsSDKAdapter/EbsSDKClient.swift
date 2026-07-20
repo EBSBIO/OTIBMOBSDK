@@ -37,6 +37,18 @@ extension EbsSDKClient {
 
 		/// EBS BundleURLSchemes
 		static let ebsBundleURLSchemes = "ebsgu://"
+
+		/// Scheme for only photo verification
+		static let onlyPhotoScheme = "https"
+
+		/// Host for only photo verification
+		static let onlyPhotoHost = "ebs.ru"
+
+		/// Path for only photo verification
+		static let onlyPhotoPath = "/v1/verification/start"
+
+		/// Fragment for only photo verification
+		static let onlyPhotoFragment = "mobile"
 	}
 
 	/// Structure describes keys which are using in URL
@@ -53,6 +65,26 @@ extension EbsSDKClient {
 
 		/// Cancel result identifier
 		static let cancelKey = "cancel"
+	}
+
+	private struct OnlyPhotoRequestKeys {
+		/// Information system initiating only photo verification
+		static let initiatorSystemKey = "InitiatorSystem"
+
+		/// OGRN of the counterparty
+		static let ogrnKey = "OGRN"
+
+		/// Return url after verification
+		static let returnUrlKey = "ReturnUrl"
+
+		/// Adapter url for verification
+		static let adapterUriKey = "AdapterUri"
+
+		/// Session identifier
+		static let sidKey = "Sid"
+
+		/// Bio collection type
+		static let bioCollectionTypeKey = "BioCollectionType"
 	}
 
 	/// Text resources
@@ -104,6 +136,9 @@ public class EbsSDKClient {
 	private var appTitle: String?
 	private var infoSystem: String?
 	private var presentingController: UIViewController?
+	private var ogrn: String?
+	private var bioCollectionType: String?
+	private var isOnlyPhotoMode = false
 	private var ebsVerificationState: State = .none
 
 	//MARK: - Inits
@@ -125,6 +160,24 @@ public class EbsSDKClient {
 		self.appTitle = title
 		self.infoSystem = infoSystem
 		self.presentingController = controller
+		self.isOnlyPhotoMode = false
+	}
+
+	/// Configures SDK for only photo verification process
+	///  - Parameter appUrlScheme: Url scheme of the app
+	///  - Parameter appTitle: Name of the app
+	///  - Parameter infoSystem: System information about the app
+	///  - Parameter ogrn: OGRN
+	///  - Parameter bioCollectionType: Bio collection type
+	///  - Parameter presenting: Current view controller. Needs for show alert when ebs is not installed
+	public func setOnlyPhoto(scheme: String, title: String, infoSystem: String, ogrn: String, bioCollectionType: String, presenting controller: UIViewController?) {
+		self.appUrlScheme = scheme
+		self.appTitle = title
+		self.infoSystem = infoSystem
+		self.presentingController = controller
+		self.ogrn = ogrn
+		self.bioCollectionType = bioCollectionType
+		self.isOnlyPhotoMode = true
 	}
 
 	/// Requests EBS verification and returns EBS verification token
@@ -173,9 +226,18 @@ public class EbsSDKClient {
 	private func openUrlIfNeeded(sessionDetails: EbsSessionDetails) {
 		guard
 				let appUrlScheme = self.appUrlScheme,
-				var urlComponents = URLComponents(string: Constants.ebsBundleURLSchemes),
 				let appTitle = appTitle,
 				let infoSystem = infoSystem else {
+			showSDKIsNotConfigured()
+			return
+		}
+
+		if isOnlyPhotoMode {
+			openOnlyPhotoUrlIfNeeded(sessionDetails: sessionDetails, infoSystem: infoSystem)
+			return
+		}
+
+		guard var urlComponents = URLComponents(string: Constants.ebsBundleURLSchemes) else {
 			showSDKIsNotConfigured()
 			return
 		}
@@ -198,6 +260,40 @@ public class EbsSDKClient {
 			else {
 				self.showEbsNotInstalledAlert(ebsVerificationState: self.ebsVerificationState)
 			}
+		}
+	}
+
+	private func openOnlyPhotoUrlIfNeeded(sessionDetails: EbsSessionDetails, infoSystem: String) {
+		guard let ogrn = ogrn, let bioCollectionType = bioCollectionType else {
+			showSDKIsNotConfigured()
+			return
+		}
+
+		var urlComponents = URLComponents()
+		urlComponents.scheme = Constants.onlyPhotoScheme
+		urlComponents.host = Constants.onlyPhotoHost
+		urlComponents.path = Constants.onlyPhotoPath
+		urlComponents.queryItems = [
+			URLQueryItem(name: OnlyPhotoRequestKeys.initiatorSystemKey, value: infoSystem),
+			URLQueryItem(name: OnlyPhotoRequestKeys.ogrnKey, value: ogrn),
+			URLQueryItem(name: OnlyPhotoRequestKeys.returnUrlKey, value: sessionDetails.dboKoPublicUri),
+			URLQueryItem(name: OnlyPhotoRequestKeys.adapterUriKey, value: sessionDetails.adapterUrl),
+			URLQueryItem(name: OnlyPhotoRequestKeys.sidKey, value: sessionDetails.sid),
+			URLQueryItem(name: OnlyPhotoRequestKeys.bioCollectionTypeKey, value: bioCollectionType)]
+		urlComponents.fragment = Constants.onlyPhotoFragment
+
+		DispatchQueue.main.async {
+			guard self.ebsAppIsInstalled else {
+				self.showEbsNotInstalledAlert(ebsVerificationState: self.ebsVerificationState)
+				return
+			}
+
+			guard let url = urlComponents.url else {
+				self.showSDKIsNotConfigured()
+				return
+			}
+
+			self.application.open(url)
 		}
 	}
 
