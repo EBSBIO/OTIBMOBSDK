@@ -164,15 +164,11 @@ public class EbsSDKClient {
 	}
 
 	/// Configures SDK for only photo verification process
-	///  - Parameter appUrlScheme: Url scheme of the app
-	///  - Parameter appTitle: Name of the app
 	///  - Parameter infoSystem: System information about the app
 	///  - Parameter ogrn: OGRN
 	///  - Parameter bioCollectionType: Bio collection type
 	///  - Parameter presenting: Current view controller. Needs for show alert when ebs is not installed
-	public func setOnlyPhoto(scheme: String, title: String, infoSystem: String, ogrn: String, bioCollectionType: String, presenting controller: UIViewController?) {
-		self.appUrlScheme = scheme
-		self.appTitle = title
+	public func setOnlyPhoto(infoSystem: String, ogrn: String, bioCollectionType: String, presenting controller: UIViewController?) {
 		self.infoSystem = infoSystem
 		self.presentingController = controller
 		self.ogrn = ogrn
@@ -224,16 +220,18 @@ public class EbsSDKClient {
 	}
 	
 	private func openUrlIfNeeded(sessionDetails: EbsSessionDetails) {
-		guard
-				let appUrlScheme = self.appUrlScheme,
-				let appTitle = appTitle,
-				let infoSystem = infoSystem else {
+		guard let infoSystem = infoSystem else {
 			showSDKIsNotConfigured()
 			return
 		}
 
 		if isOnlyPhotoMode {
 			openOnlyPhotoUrlIfNeeded(sessionDetails: sessionDetails, infoSystem: infoSystem)
+			return
+		}
+
+		guard let appUrlScheme = self.appUrlScheme, let appTitle = appTitle else {
+			showSDKIsNotConfigured()
 			return
 		}
 
