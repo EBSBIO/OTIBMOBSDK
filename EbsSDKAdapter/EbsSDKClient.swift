@@ -18,12 +18,13 @@ extension EbsSDKClient {
 		case success(details: EbsVerificationDetails)
 		case failure(error: RequestEBSVerificationError)
 		case cancel
+		case `repeat`(errorCode: String?)
 	}
 
 	/// Enum describes EBS Verification errors
 	public enum RequestEBSVerificationError {
 		case ebsNotInstalled
-		case verificationFailed
+		case verificationFailed(errorCode: String?)
 		case sdkIsNotConfigured
 		case unknown
 	}
@@ -49,6 +50,9 @@ extension EbsSDKClient {
 
 		/// Fragment for only photo verification
 		static let onlyPhotoFragment = "mobile"
+
+		/// Repeat verification status
+		static let repeatStatus = "REPEAT"
 	}
 
 	/// Structure describes keys which are using in URL
@@ -65,6 +69,12 @@ extension EbsSDKClient {
 
 		/// Cancel result identifier
 		static let cancelKey = "cancel"
+
+		/// Verification status
+		static let statusKey = "status"
+
+		/// Verification error code
+		static let errorCodeKey = "error_code"
 	}
 
 	private struct OnlyPhotoRequestKeys {
@@ -196,6 +206,13 @@ public class EbsSDKClient {
 				return
 			}
 
+			let errorCode = getValue(from: queryItems, for: EbsRequestKeys.errorCodeKey)
+
+			if getValue(from: queryItems, for: EbsRequestKeys.statusKey) == Constants.repeatStatus {
+				completion(.repeat(errorCode: errorCode))
+				return
+			}
+
 			if let resSecret = getValue(from: queryItems, for: EbsVerificationDetails.CodingKeys.resSecret) {
 				completion(.success(details: EbsVerificationDetails(resSecret: resSecret)))
 				return
@@ -206,7 +223,7 @@ public class EbsSDKClient {
 				return
 			}
 
-			completion(.failure(error: .verificationFailed))
+			completion(.failure(error: .verificationFailed(errorCode: errorCode)))
 
 		case .none:
 			break
